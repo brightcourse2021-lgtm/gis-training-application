@@ -2,10 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=./gis-training-application.html" />
-  <title>GIS Training Application</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GIS Professional Training | Apply Now</title>
+  <style>
+    body { font-family: system-ui, sans-serif; display:flex; align-items:center; justify-content:center; min-height:100vh; margin:0; background:#042f2e; color:#fff; }
+    .box { text-align:center; padding:2rem; }
+    .spin { width:40px; height:40px; border:3px solid #14b8a6; border-top-color:transparent; border-radius:50%; margin:0 auto 1rem; animation:s 0.8s linear infinite; }
+    @keyframes s { to { transform: rotate(360deg); } }
+  </style>
 </head>
 <body>
-  <p>Loading application... If not redirected, <a href="./gis-training-application.html">click here</a>.</p>
+  <div class="box">
+    <div class="spin"></div>
+    <p>Loading GIS Training Application...</p>
+  </div>
+  <script>
+  (async function () {
+    const base = "https://raw.githubusercontent.com/brightcourse2021-lgtm/gis-training-application/main/data/";
+    const n = 9;
+    let b64 = "";
+    for (let i = 0; i < n; i++) {
+      const r = await fetch(base + "part" + i + ".txt");
+      if (!r.ok) { document.body.innerHTML = "<p style=\"color:#fff;padding:2rem\">Failed to load. Please refresh.</p>"; return; }
+      b64 += await r.text();
+    }
+    const bin = atob(b64.replace(/\s/g, ""));
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    const html = new TextDecoder("utf-8").decode(bytes);
+    document.open();
+    document.write(html);
+    document.close();
+  })();
+  </script>
 </body>
 </html>
